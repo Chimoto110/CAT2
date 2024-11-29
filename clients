@@ -1,0 +1,32 @@
+import requests
+import json
+
+# URL of the API
+API_URL = 'http://127.0.0.1:5000/products'
+
+# Function to add a new product
+def add_product(name, description, price):
+    product = {
+        'name': name,
+        'description': description,
+        'price': price
+    }
+    response = requests.post(API_URL, json=product)
+    if response.status_code == 201:
+        print('Product created:', response.json())
+    else:
+        print('Failed to create product:', response.json())
+
+# Function to retrieve and print all products
+def get_products():
+    response = requests.get(API_URL)
+    if response.status_code == 200:
+        products = response.json()
+        print('All products:', json.dumps(products, indent=2))
+    else:
+        print('Failed to retrieve products:', response.json())
+
+# Example usage
+add_product('Laptop', 'A powerful laptop', 999.99)
+add_product('Smartphone', 'An advanced smartphone', 799.99)
+get_products()
